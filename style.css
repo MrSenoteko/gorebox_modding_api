@@ -16,25 +16,22 @@
     --aurora-color-2: rgba(20, 120, 220, 0.15); /* Синий */
 }
 
-/* --- UPDATED: More pleasant light theme --- */
 body.light-theme {
-    --bg-color: #f8fafc; /* Softer off-white */
+    --bg-color: #f8fafc;
     --card-bg: rgba(255, 255, 255, 0.6);
     --header-bg: rgba(255, 255, 255, 0.7);
-    --text-color: #1e293b; /* Slate 800 for strong text */
-    --text-color-light: #475569; /* Slate 600 for body text */
-    --text-color-muted: #94a3b8; /* Slate 400 for muted text */
+    --text-color: #1e293b;
+    --text-color-light: #475569;
+    --text-color-muted: #94a3b8;
     --border-color: rgba(59, 130, 246, 0.15);
     --border-color-light: rgba(59, 130, 246, 0.2);
-    --link-color: #2563eb; /* Stronger Blue */
+    --link-color: #2563eb;
     --link-hover-color: #1d4ed8;
     --highlight-color: #2563eb;
-    --code-bg: #f1f5f9; /* Slate 100 */
-    --aurora-color-1: rgba(59, 130, 246, 0.12); /* Brighter Blue */
-    --aurora-color-2: rgba(168, 85, 247, 0.1); /* Brighter Purple */
+    --code-bg: #f1f5f9;
+    --aurora-color-1: rgba(59, 130, 246, 0.12);
+    --aurora-color-2: rgba(168, 85, 247, 0.1);
 }
-
-/* ... (весь предыдущий CSS код остается без изменений) ... */
 
 body { 
     background-color: var(--bg-color);
@@ -103,21 +100,10 @@ body {
     transition: opacity 0.4s ease-in-out;
 }
 
-.header-scrolled #header-container {
-    padding: 0.75rem 0;
-}
-
-.header-scrolled #header-background {
-    opacity: 1;
-}
-
-.header-scrolled .header-subtitle {
-    display: none;
-}
-
-.header-scrolled .header-title {
-    font-size: 1.5rem; /* 24px */
-}
+.header-scrolled #header-container { padding: 0.75rem 0; }
+.header-scrolled #header-background { opacity: 1; }
+.header-scrolled .header-subtitle { display: none; }
+.header-scrolled .header-title { font-size: 1.5rem; }
 
 .header-content {
     position: relative;
@@ -148,8 +134,8 @@ body {
     background-position: center; 
     overflow: hidden; 
     display: flex; 
-    flex-direction: column; 
-    justify-content: flex-end; 
+    flex-direction: column;
+    justify-content: flex-end;
     min-height: 250px; 
 }
 
@@ -167,23 +153,15 @@ body {
 }
 
 .admin-card-controls {
-    display: none; 
+    display: none;
     z-index: 11;
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
 }
 
-.admin-control {
-    display: none;
-}
-
-body.admin-mode .admin-control {
-    display: inline-block;
-}
-
-body.admin-mode .admin-card-controls {
-    display: flex;
-}
+.admin-control { display: none; }
+body.admin-mode .admin-control { display: inline-block; }
+body.admin-mode .admin-card-controls { display: flex; }
 
 pre code.hljs { 
     position: relative; 
@@ -211,16 +189,12 @@ pre code.hljs {
     opacity: 0.7;
 }
 
-pre:hover .copy-btn { 
-    opacity: 1; 
-}
-
+pre:hover .copy-btn { opacity: 1; }
 .copy-btn:hover { 
     background-color: var(--highlight-color);
     border-color: var(--highlight-color);
     color: white; 
 }
-
 .copy-btn-copied { 
     background-color: #2ea043;
     color: white; 
@@ -229,7 +203,6 @@ pre:hover .copy-btn {
 .page-section { 
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; 
 }
-
 .page-section.hidden { 
     opacity: 0; 
     visibility: hidden; 
@@ -255,14 +228,13 @@ pre:hover .copy-btn {
     padding: 0.75rem 1rem;
     transition: all 0.3s ease;
 }
-
 .form-input:focus {
     outline: none;
     border-color: var(--link-color);
     box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
 }
 
-/* --- NEW: Quill Editor Theme --- */
+/* Quill Editor Theme */
 #editor-container {
     background-color: var(--code-bg);
     color: var(--text-color);
@@ -284,12 +256,8 @@ pre:hover .copy-btn {
 .ql-toolbar, .ql-container {
     border-color: var(--border-color-light) !important;
 }
-.ql-snow .ql-stroke {
-    stroke: var(--text-color-muted);
-}
-.ql-snow .ql-picker-label {
-    color: var(--text-color-muted);
-}
+.ql-snow .ql-stroke { stroke: var(--text-color-muted); }
+.ql-snow .ql-picker-label { color: var(--text-color-muted); }
 .ql-snow .ql-picker.ql-expanded .ql-picker-options {
     background-color: var(--bg-color);
     border-color: var(--border-color-light) !important;
@@ -303,7 +271,7 @@ pre:hover .copy-btn {
     font-style: normal;
 }
 
-/* Стили для инпута и текста (Tailwind overrides) */
+/* Tailwind overrides */
 .text-white { color: var(--text-color); }
 h1, h2, h3, h4, h5, h6 { color: var(--text-color); transition: color 0.4s ease; }
 p, div, span, a, li { color: var(--text-color-light); transition: color 0.4s ease; }

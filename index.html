@@ -94,10 +94,21 @@
                                 <div id="editor-container"></div>
                             </div>
                             <div class="flex items-center gap-4">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Save Post</button>
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Generate JSON</button>
                                 <button type="button" id="cancel-edit-btn" class="bg-gray-600/50 hover:bg-gray-600/80 text-white font-bold py-3 px-6 rounded-lg transition-colors">Cancel</button>
                             </div>
                         </form>
+                        
+                        <div id="json-output-container" class="hidden mt-8">
+                            <h3 class="text-2xl font-bold mb-4">1. Copy this JSON code</h3>
+                            <p class="text-gray-400 mb-4">This is the entire updated content for your blog.</p>
+                            <textarea id="json-output" rows="10" class="form-input w-full font-mono text-xs" readonly></textarea>
+                            <h3 class="text-2xl font-bold mt-6 mb-4">2. Update `blog-posts.json` file on GitHub</h3>
+                            <p class="text-gray-400 mb-4">Go to your repository on GitHub, open the <code class="bg-gray-700 p-1 rounded">blog-posts.json</code> file, click "Edit", and replace its content with the code you just copied.</p>
+                            <a id="github-file-link" href="#" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                                Open `blog-posts.json` on GitHub
+                            </a>
+                        </div>
                     </section>
                 </div>
             </div>
@@ -107,27 +118,6 @@
             <button id="admin-login-btn" class="text-xs text-gray-600 hover:text-blue-400 mt-2">Admin Login</button>
         </footer>
     </div>
-
-    <section id="blog-editor-page" class="page-section hidden">
-    <h2 id="editor-title" class="text-4xl font-bold mb-12">Create New Post</h2>
-    <form id="blog-editor-form" class="space-y-6">
-        <div class="flex items-center gap-4">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Generate JSON</button>
-            <button type="button" id="cancel-edit-btn" class="bg-gray-600/50 hover:bg-gray-600/80 text-white font-bold py-3 px-6 rounded-lg transition-colors">Cancel</button>
-        </div>
-    </form>
-    
-    <div id="json-output-container" class="hidden mt-8">
-        <h3 class="text-2xl font-bold mb-4">1. Copy this JSON code</h3>
-        <p class="text-gray-400 mb-4">This is the entire updated content for your blog.</p>
-        <textarea id="json-output" rows="10" class="form-input w-full font-mono text-xs" readonly></textarea>
-        <h3 class="text-2xl font-bold mt-6 mb-4">2. Update `blog-posts.json` file on GitHub</h3>
-        <p class="text-gray-400 mb-4">Go to your repository on GitHub, open the <code class="bg-gray-700 p-1 rounded">blog-posts.json</code> file, click "Edit", and replace its content with the code you just copied.</p>
-        <a id="github-file-link" href="#" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-            Open `blog-posts.json` on GitHub
-        </a>
-    </div>
-</section>
 
     <script src="script.js"></script>
 </body>

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.querySelector('main');
     let quill;
     
-    // NEW: Укажите ваше имя пользователя и имя репозитория на GitHub
+    // !!! ВАЖНО: Укажите ваше имя пользователя и имя репозитория на GitHub
     const GITHUB_USER = "YOUR_USERNAME";
     const GITHUB_REPO = "YOUR_REPONAME";
     const githubFileLink = document.getElementById('github-file-link');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         githubFileLink.href = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/edit/main/blog-posts.json`;
     }
 
-    // --- Логика для плавной анимации сетки (без изменений) ---
+    // --- Логика для плавной анимации сетки ---
     let mouseX = 0, mouseY = 0, gridX = 0, gridY = 0;
     document.body.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
     const animate = () => {
@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     animate();
 
-    // --- Логика для плавающей шапки (без изменений) ---
+    // --- Логика для плавающей шапки ---
     window.addEventListener('scroll', () => body.classList.toggle('header-scrolled', window.scrollY > 30));
 
-    // --- Логика переключения тем (без изменений) ---
+    // --- Логика переключения тем ---
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-toggle-icon');
     const moonIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', () => setTheme(!document.body.classList.contains('light-theme')));
     setTheme(localStorage.getItem('theme') === 'light');
 
-    // --- Навигация по сайту (без изменений) ---
+    // --- Навигация по сайту ---
     const pages = document.querySelectorAll('.page-section');
     const navLinks = document.querySelectorAll('.nav-link');
     let currentPage = 'home-page';
@@ -79,10 +79,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }); 
     });
     
-    // --- Данные документации и их генерация (без изменений) ---
-    const docData = [ { category: "Global Lua Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.884 5.066A9 9 0 1016.116 5.066M12 3v1m0 16v1" /></svg>`, functions: [ { name: "log(text)", description: "Prints text to the Unity console with a [Lua] prefix.", example: `log("Player position updated")` }, { name: "getDeltaTime()", description: "Returns the value of Time.deltaTime.", example: `local dt = getDeltaTime()\\nplayer.x = player.x + speed * dt` }, ] }, { category: "Lua GUI Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>`, functions: [ { name: "gui.label(text)", description: "Displays a text label.", example: `M.gui_update = function()\\n    gui.label("Player Health: 100")\\nend` }, { name: "gui.button(text)", description: "Displays a button; returns true if clicked.", example: `M.gui_update = function()\\n    if gui.button("Quit Game") then\\n        log("Quit button pressed")\\n    end\\nend` }, { name: "gui.hSlider(value, left, right)", description: "A horizontal slider; returns the current value.", example: `local volume = 0.5\\nM.gui_update = function()\\n    volume = gui.hSlider(volume, 0.0, 1.0)\\nend` }, { name: "gui.toggle(value, text)", description: "Displays a toggle switch; returns its current boolean status.", example: `local musicEnabled = true\\nM.gui_update = function()\\n    musicEnabled = gui.toggle(musicEnabled, "Music On/Off")\\nend` }, ] }, { category: "Lua Unity Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>`, functions: [ { name: "Unity.GameObject.Create(name, path, ...)", description: "Creates a new object via PhotonNetwork.", example: `local newCube = Unity.GameObject.Create("MyCube", "Primitives/Cube", 0, 1, 0, 1, 1, 1, 0, 0, 0)` }, { name: "Unity.GameObject.Find(name)", description: "Finds an object by name; returns an object table.", example: `local player = Unity.GameObject.Find("MainPlayer")` }, { name: "Unity.GameObject.AddComponent(id, typeName)", description: "Adds a component to an object by its ID.", example: `local player = Unity.GameObject.Find("MainPlayer")\\nUnity.GameObject.AddComponent(player.id, "Rigidbody")` }, ] }, { category: "GameObject & Transform Methods", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 7l-8.228 8.228-3.536-3.536L1 21M15 1l6 6" /></svg>`, functions: [ { name: "object:GetName()", description: "Returns the name of the object.", example: `local player = Unity.GameObject.Find("MainPlayer")\\nlog(player:GetName())` }, { name: "object:SetActive(bool)", description: "Activates or deactivates the object.", example: `local enemy = Unity.GameObject.Find("Enemy1")\\nenemy:SetActive(false)` }, { name: "transform:GetPosition()", description: "Returns the global position (x, y, z).", example: `local pos = transform:GetPosition()\\nlog("x=" .. pos.x .. ", y=" .. pos.y)` }, { name: "transform:SetPosition(x, y, z)", description: "Sets the global position.", example: `transform:SetPosition(10, 5, 20)` }, { name: "transform:Translate(x, y, z)", description: "Moves the object by the specified vector.", example: `transform:Translate(0, 0, 5 * getDeltaTime()) -- Move forward` }, { name: "transform:Rotate(x, y, z)", description: "Rotates the object by the specified angles.", example: `transform:Rotate(0, 45 * getDeltaTime(), 0) -- Rotate around Y axis` }, ] }, { category: "Lua Module Lifecycle", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 20h5v-5M20 4h-5v5" /></svg>`, functions: [ { name: "awake()", description: "Called during Unity's Awake() phase.", example: `M = {}\\nfunction M.awake()\\n    log("Module is awake!")\\nend` }, { name: "start()", description: "Called during Unity's Start() phase.", example: `M = {}\\nfunction M.start()\\n    log("Module has started!")\\nend` }, { name: "update()", description: "Called every frame in Update().", example: `M = {}\\nfunction M.update()\\n    -- Game logic here\\nend` }, { name: "fixed_update()", description: "Called in FixedUpdate().", example: `M = {}\\nfunction M.fixed_update()\\n    -- Physics logic here\\nend` }, ] } ];
-    (function generateDocs(){
+    // --- Данные документации ---
+    const docData = [ { category: "Global Lua Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.884 5.066A9 9 0 1016.116 5.066M12 3v1m0 16v1" /></svg>`, functions: [ { name: "log(text)", description: "Prints text to the Unity console with a [Lua] prefix.", example: `log("Player position updated")` }, { name: "getDeltaTime()", description: "Returns the value of Time.deltaTime.", example: `local dt = getDeltaTime()\nplayer.x = player.x + speed * dt` }, ] }, { category: "Lua GUI Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>`, functions: [ { name: "gui.label(text)", description: "Displays a text label.", example: `M.gui_update = function()\n    gui.label("Player Health: 100")\nend` }, { name: "gui.button(text)", description: "Displays a button; returns true if clicked.", example: `M.gui_update = function()\n    if gui.button("Quit Game") then\n        log("Quit button pressed")\n    end\nend` }, { name: "gui.hSlider(value, left, right)", description: "A horizontal slider; returns the current value.", example: `local volume = 0.5\nM.gui_update = function()\n    volume = gui.hSlider(volume, 0.0, 1.0)\nend` }, { name: "gui.toggle(value, text)", description: "Displays a toggle switch; returns its current boolean status.", example: `local musicEnabled = true\nM.gui_update = function()\n    musicEnabled = gui.toggle(musicEnabled, "Music On/Off")\nend` }, ] }, { category: "Lua Unity Functions", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>`, functions: [ { name: "Unity.GameObject.Create(name, path, ...)", description: "Creates a new object via PhotonNetwork.", example: `local newCube = Unity.GameObject.Create("MyCube", "Primitives/Cube", 0, 1, 0, 1, 1, 1, 0, 0, 0)` }, { name: "Unity.GameObject.Find(name)", description: "Finds an object by name; returns an object table.", example: `local player = Unity.GameObject.Find("MainPlayer")` }, { name: "Unity.GameObject.AddComponent(id, typeName)", description: "Adds a component to an object by its ID.", example: `local player = Unity.GameObject.Find("MainPlayer")\nUnity.GameObject.AddComponent(player.id, "Rigidbody")` }, ] }, { category: "GameObject & Transform Methods", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 7l-8.228 8.228-3.536-3.536L1 21M15 1l6 6" /></svg>`, functions: [ { name: "object:GetName()", description: "Returns the name of the object.", example: `local player = Unity.GameObject.Find("MainPlayer")\nlog(player:GetName())` }, { name: "object:SetActive(bool)", description: "Activates or deactivates the object.", example: `local enemy = Unity.GameObject.Find("Enemy1")\nenemy:SetActive(false)` }, { name: "transform:GetPosition()", description: "Returns the global position (x, y, z).", example: `local pos = transform:GetPosition()\nlog("x=" .. pos.x .. ", y=" .. pos.y)` }, { name: "transform:SetPosition(x, y, z)", description: "Sets the global position.", example: `transform:SetPosition(10, 5, 20)` }, { name: "transform:Translate(x, y, z)", description: "Moves the object by the specified vector.", example: `transform:Translate(0, 0, 5 * getDeltaTime()) -- Move forward` }, { name: "transform:Rotate(x, y, z)", description: "Rotates the object by the specified angles.", example: `transform:Rotate(0, 45 * getDeltaTime(), 0) -- Rotate around Y axis` }, ] }, { category: "Lua Module Lifecycle", icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 20h5v-5M20 4h-5v5" /></svg>`, functions: [ { name: "awake()", description: "Called during Unity's Awake() phase.", example: `M = {}\nfunction M.awake()\n    log("Module is awake!")\nend` }, { name: "start()", description: "Called during Unity's Start() phase.", example: `M = {}\nfunction M.start()\n    log("Module has started!")\nend` }, { name: "update()", description: "Called every frame in Update().", example: `M = {}\nfunction M.update()\n    -- Game logic here\nend` }, { name: "fixed_update()", description: "Called in FixedUpdate().", example: `M = {}\nfunction M.fixed_update()\n    -- Physics logic here\nend` }, ] } ];
+
+    // --- Логика подсветки, скролла и поиска по документации ---
+    const handleScrollAndHighlight = (targetId) => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            showPage('home-page');
+            setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                targetElement.style.transition = 'box-shadow 0.4s ease-in-out, transform 0.4s ease-in-out';
+                targetElement.style.boxShadow = '0 0 35px rgba(59, 130, 246, 0.4)';
+                targetElement.style.transform = 'scale(1.03)';
+                setTimeout(() => {
+                    targetElement.style.boxShadow = '';
+                    targetElement.style.transform = 'scale(1)';
+                }, 2000);
+            }, 100);
+        }
+    };
+
+    const generateDocumentation = () => {
         const docContainer = document.getElementById('documentation');
+        if (!docContainer) return;
         docContainer.innerHTML = ''; 
         docData.forEach(category => { 
             const categoryTitle = document.createElement('h2'); 
@@ -104,30 +124,128 @@ document.addEventListener('DOMContentLoaded', () => {
             }); 
             docContainer.appendChild(grid); 
         });
-    })();
-    
-    // --- ================================== ---
-    // --- СИСТЕМА УПРАВЛЕНИЯ БЛОГОМ (CMS) ---
-    // --- ================================== ---
 
+        docContainer.addEventListener('click', function(e) { 
+            const button = e.target.closest('.copy-btn'); 
+            if (button) { 
+                const codeElement = button.closest('.relative').querySelector('code'); 
+                navigator.clipboard.writeText(codeElement.textContent).then(() => { 
+                    button.innerHTML = 'Copied!'; 
+                    button.classList.add('copy-btn-copied'); 
+                    setTimeout(() => { 
+                        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`; 
+                        button.classList.remove('copy-btn-copied'); 
+                    }, 2000); 
+                }); 
+            } 
+        });
+    };
+    
+    const generateDocsSidebar = () => {
+        const sidebarContainer = document.getElementById('docs-sidebar');
+        if (!sidebarContainer) return;
+        
+        sidebarContainer.innerHTML = '';
+        const nav = document.createElement('nav');
+        nav.className = 'sticky top-28';
+        const navList = document.createElement('ul');
+        navList.className = 'space-y-6';
+
+        docData.forEach(category => {
+            const categoryId = `cat-${category.category.replace(/[^a-zA-Z0-9_]/g, '-')}`;
+            const categoryLi = document.createElement('li');
+            const categoryLink = document.createElement('a');
+            categoryLink.href = `#${categoryId}`;
+            categoryLink.textContent = category.category;
+            categoryLink.className = 'font-bold text-lg text-blue-300 hover:text-white transition-colors';
+            categoryLink.dataset.targetId = categoryId;
+            categoryLi.appendChild(categoryLink);
+
+            const subList = document.createElement('ul');
+            subList.className = 'pl-4 mt-2 space-y-2 border-l border-blue-500/20';
+            category.functions.forEach(func => {
+                const funcId = `func-${func.name.replace(/[^a-zA-Z0-9_]/g, '-')}`;
+                const funcLi = document.createElement('li');
+                const funcLink = document.createElement('a');
+                funcLink.href = `#${funcId}`;
+                funcLink.textContent = func.name;
+                funcLink.className = 'block text-sm text-gray-400 hover:text-blue-300 transition-colors font-mono';
+                funcLink.dataset.targetId = funcId;
+                funcLi.appendChild(funcLink);
+                subList.appendChild(funcLi);
+            });
+            categoryLi.appendChild(subList);
+            navList.appendChild(categoryLi);
+        });
+
+        nav.appendChild(navList);
+        sidebarContainer.appendChild(nav);
+
+        sidebarContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && e.target.dataset.targetId) {
+                e.preventDefault();
+                handleScrollAndHighlight(e.target.dataset.targetId);
+            }
+        });
+    };
+
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsContainer = document.getElementById('searchResults');
+    searchInput.addEventListener('input', (e) => { 
+        const searchTerm = e.target.value.toLowerCase(); 
+        searchResultsContainer.innerHTML = ''; 
+        if (searchTerm.length < 1) { 
+            searchResultsContainer.classList.add('hidden'); 
+            return; 
+        } 
+        const results = docData.flatMap(category => 
+            category.functions
+                .filter(func => func.name.toLowerCase().includes(searchTerm) || func.description.toLowerCase().includes(searchTerm))
+                .map(func => ({ name: func.name, id: `func-${func.name.replace(/[^a-zA-Z0-9_]/g, '-')}` }))
+        );
+        if (results.length > 0) { 
+            searchResultsContainer.classList.remove('hidden'); 
+            results.forEach(result => { 
+                const resultItem = document.createElement('a'); 
+                resultItem.href = `#${result.id}`; 
+                resultItem.textContent = result.name; 
+                resultItem.className = 'block text-left p-2 rounded-md hover:bg-blue-500/20 transition-colors cursor-pointer text-blue-200'; 
+                resultItem.dataset.targetId = result.id; 
+                searchResultsContainer.appendChild(resultItem); 
+            }); 
+        } else { 
+            searchResultsContainer.classList.add('hidden'); 
+        } 
+    });
+    searchResultsContainer.addEventListener('click', (e) => { 
+        if (e.target.tagName === 'A' && e.target.dataset.targetId) { 
+            e.preventDefault(); 
+            handleScrollAndHighlight(e.target.dataset.targetId); 
+            searchResultsContainer.classList.add('hidden'); 
+            searchInput.value = ''; 
+        } 
+    });
+    document.addEventListener('click', (e) => { 
+        if (!e.target.closest('#searchResults') && e.target !== searchInput) { 
+            searchResultsContainer.classList.add('hidden'); 
+        } 
+    });
+    
+    // --- СИСТЕМА УПРАВЛЕНИЯ БЛОГОМ (CMS) ---
     let blogData = [];
     const ADMIN_PASSWORD = 'admin'; 
     let isAdmin = false;
 
-    // UPDATED: Загрузка постов из файла blog-posts.json
     async function loadPosts() {
         try {
-            // Добавляем случайный параметр, чтобы избежать кэширования
             const response = await fetch(`blog-posts.json?v=${Date.now()}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             blogData = await response.json();
             generateBlogPages();
         } catch (error) {
             console.error("Could not load blog posts:", error);
             const previewContainer = document.getElementById('blog-preview');
-            previewContainer.innerHTML = `<p class="text-red-400">Error loading blog posts. Please check if the 'blog-posts.json' file exists and is valid.</p>`;
+            if (previewContainer) previewContainer.innerHTML = `<p class="text-red-400">Error: Could not load 'blog-posts.json'.</p>`;
         }
     }
 
@@ -148,14 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const initializeEditor = () => {
-        // ... (код инициализации редактора остается прежним)
-        const toolbarOptions = [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['blockquote', 'code-block'],
-            ['link', 'image', 'divider']
-        ];
+        const toolbarOptions = [['bold', 'italic', 'underline'], [{ 'header': [1, 2, 3, false] }], [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['blockquote', 'code-block'], ['link', 'image', 'divider']];
         const BlockEmbed = Quill.import('blots/block/embed');
         class DividerBlot extends BlockEmbed {}
         DividerBlot.blotName = 'divider';
@@ -167,17 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 toolbar: {
                     container: toolbarOptions,
                     handlers: {
-                        'image': () => {
-                            const url = prompt('Enter image URL:');
-                            if (url) quill.insertEmbed(quill.getSelection(true).index, 'image', url, Quill.sources.USER);
-                        },
-                        'divider': () => {
-                            const range = quill.getSelection(true);
-                            if (range) {
-                                quill.insertEmbed(range.index, 'divider', true, Quill.sources.USER);
-                                quill.setSelection(range.index + 1, Quill.sources.SILENT);
-                            }
-                        }
+                        'image': () => { const url = prompt('Enter image URL:'); if (url) quill.insertEmbed(quill.getSelection(true).index, 'image', url, Quill.sources.USER); },
+                        'divider': () => { const range = quill.getSelection(true); if (range) { quill.insertEmbed(range.index, 'divider', true, Quill.sources.USER); quill.setSelection(range.index + 1, Quill.sources.SILENT); } }
                     }
                 }
             },
@@ -187,23 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(dividerButton) dividerButton.innerHTML = '<svg viewBox="0 0 18 18"><line class="ql-stroke" x1="0" x2="18" y1="9" y2="9"></line></svg>';
     };
 
-    const createPostCard = (post) => {
-         return `
-            <div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden">
-                <a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card flex-grow" style="background-image: url('${post.imageUrl}');">
-                    <div class="p-8 post-card-content">
-                        <p class="text-sm text-gray-400 mb-2">${post.date}</p>
-                        <h3 class="text-2xl font-bold">${post.title}</h3>
-                        <p class="text-gray-300 mt-1">${post.summary}</p>
-                    </div>
-                </a>
-                <div class="admin-card-controls p-3 bg-gray-900/70">
-                     <button data-edit-id="${post.id}" class="edit-post-btn text-sm bg-blue-600/80 hover:bg-blue-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Edit</button>
-                     <button data-delete-id="${post.id}" class="delete-post-btn text-sm bg-red-600/80 hover:bg-red-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Delete</button>
-                </div>
-            </div>
-        `;
-    };
+    const createPostCard = (post) => `<div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden"><a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card flex-grow" style="background-image: url('${post.imageUrl}');"><div class="p-8 post-card-content"><p class="text-sm text-gray-400 mb-2">${post.date}</p><h3 class="text-2xl font-bold">${post.title}</h3><p class="text-gray-300 mt-1">${post.summary}</p></div></a><div class="admin-card-controls p-3 bg-gray-900/70"><button data-edit-id="${post.id}" class="edit-post-btn text-sm bg-blue-600/80 hover:bg-blue-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Edit</button><button data-delete-id="${post.id}" class="delete-post-btn text-sm bg-red-600/80 hover:bg-red-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Delete</button></div></div>`;
 
     const showPost = (postId) => {
         const post = blogData.find(p => p.id === postId);
@@ -217,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateBlogPages = () => {
         const previewContainer = document.getElementById('blog-preview');
         const blogGridContainer = document.getElementById('blog-page-grid');
+        if (!blogData || blogData.length === 0 || !previewContainer || !blogGridContainer) return;
         const sortedPosts = [...blogData].sort((a, b) => new Date(b.date) - new Date(a.date));
         previewContainer.innerHTML = `<div class="flex justify-between items-center"><h2 class="text-3xl font-bold border-b-2 border-blue-500/30 pb-2 mb-8">Blog & News</h2><a href="#" data-target="blog-page" class="nav-link text-blue-300 hover:text-white transition-colors">View All →</a></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${sortedPosts.slice(0, 3).map(createPostCard).join('')}</div>`;
         blogGridContainer.innerHTML = sortedPosts.map(createPostCard).join('');
@@ -229,8 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const postImageUrlInput = document.getElementById('post-image-url-input');
 
     const showEditor = (post = null) => {
-        const jsonOutputContainer = document.getElementById('json-output-container');
-        jsonOutputContainer.classList.add('hidden');
+        document.getElementById('json-output-container').classList.add('hidden');
         if (post) {
             document.getElementById('editor-title').textContent = "Edit Post";
             postIdInput.value = post.id;
@@ -246,13 +332,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showPage('blog-editor-page');
     };
-
-    // UPDATED: Эта функция теперь генерирует JSON для ручного обновления
+    
     const handleJsonGeneration = (e) => {
         e.preventDefault();
         const postId = postIdInput.value;
         const updatedPosts = [...blogData];
-        
         const postData = {
             id: postId || `post-${Date.now()}`,
             title: postTitleInput.value,
@@ -262,20 +346,16 @@ document.addEventListener('DOMContentLoaded', () => {
             date: new Date().toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }),
             readTime: `${Math.ceil(quill.getText().length / 1500)} min read`
         };
-
         if (postId) {
             const index = updatedPosts.findIndex(p => p.id === postId);
             if(index > -1) updatedPosts[index] = postData;
         } else {
-            updatedPosts.unshift(postData); // Добавляем новый пост в начало
+            updatedPosts.unshift(postData);
         }
-
         const jsonOutput = document.getElementById('json-output');
-        jsonOutput.value = JSON.stringify(updatedPosts, null, 2); // Форматируем JSON для читаемости
-
-        const jsonOutputContainer = document.getElementById('json-output-container');
-        jsonOutputContainer.classList.remove('hidden');
-        jsonOutput.select(); // Выделяем текст для удобного копирования
+        jsonOutput.value = JSON.stringify(updatedPosts, null, 2);
+        document.getElementById('json-output-container').classList.remove('hidden');
+        jsonOutput.select();
         alert('JSON code generated! Scroll down to copy it.');
     };
     
@@ -283,27 +363,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const postLink = e.target.closest('[data-post-id]');
         const editBtn = e.target.closest('.edit-post-btn');
         const deleteBtn = e.target.closest('.delete-post-btn');
-        
-        if (postLink && !e.target.closest('.admin-card-controls')) {
+        if (postLink && !e.target.closest('.admin-card-controls')) { e.preventDefault(); showPost(postLink.dataset.postId); } 
+        else if (editBtn) { e.preventDefault(); const post = blogData.find(p => p.id === editBtn.dataset.editId); if (post) showEditor(post); } 
+        else if (deleteBtn) {
             e.preventDefault();
-            showPost(postLink.dataset.postId);
-        } else if (editBtn) {
-            e.preventDefault();
-            const post = blogData.find(p => p.id === editBtn.dataset.editId);
-            if (post) showEditor(post);
-        } else if (deleteBtn) {
-            e.preventDefault();
-            const confirmed = confirm('This will generate new JSON data without this post. Are you sure?');
-            if (confirmed) {
-                const postIdToDelete = deleteBtn.dataset.deleteId;
-                const updatedPosts = blogData.filter(p => p.id !== postIdToDelete);
-                
-                showEditor(); // Открываем редактор, чтобы показать JSON
+            if (confirm('This will generate new JSON data without this post. Are you sure?')) {
+                const updatedPosts = blogData.filter(p => p.id !== deleteBtn.dataset.deleteId);
+                showEditor();
                 const jsonOutput = document.getElementById('json-output');
                 jsonOutput.value = JSON.stringify(updatedPosts, null, 2);
-                
-                const jsonOutputContainer = document.getElementById('json-output-container');
-                jsonOutputContainer.classList.remove('hidden');
+                document.getElementById('json-output-container').classList.remove('hidden');
                 jsonOutput.select();
                 alert('JSON for deletion generated. Copy the code below and update your file on GitHub.');
             }
@@ -312,14 +381,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('admin-login-btn').addEventListener('click', handleAdminLogin);
     document.getElementById('add-post-btn').addEventListener('click', () => showEditor());
-    document.getElementById('cancel-edit-btn').addEventListener('click', () => {
-        showPage('blog-page');
-        document.getElementById('json-output-container').classList.add('hidden');
-    });
+    document.getElementById('cancel-edit-btn').addEventListener('click', () => { showPage('blog-page'); document.getElementById('json-output-container').classList.add('hidden'); });
     editorForm.addEventListener('submit', handleJsonGeneration);
 
     // --- Инициализация при загрузке ---
     showPage('home-page');
+    generateDocumentation();
+    generateDocsSidebar();
     loadPosts();
     initializeEditor();
     hljs.highlightAll();
