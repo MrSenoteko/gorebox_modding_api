@@ -235,10 +235,10 @@ pre:hover .copy-btn { opacity: 1; }
 }
 
 /* Quill Editor Theme */
-#editor-container {
+#editor-container-ru, #editor-container-en {
     background-color: var(--code-bg);
     color: var(--text-color);
-    height: 400px;
+    height: 300px;
     border-radius: 0.5rem;
     border: 1px solid var(--border-color-light);
     transition: all 0.3s ease;
@@ -292,3 +292,9 @@ a { text-decoration: none; }
 .hover\:bg-blue-500\/20:hover { background-color: var(--border-color); }
 .text-gray-400 { color: var(--text-color-muted); }
 footer { border-top-color: var(--border-color); }
+
+
+/* НОВОЕ ПРАВИЛО ДЛЯ ЦВЕТА ЗАГОЛОВКА ПОСТА */
+body.light-theme #post-page .post-title-text {
+    color: var(--text-color);
+}
