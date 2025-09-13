@@ -2,16 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const grid = document.getElementById('background-grid');
     const mainContent = document.querySelector('main');
-    let quillRu, quillEn;
     
-    // !!! ВАЖНО: Укажите ваше имя пользователя и имя репозитория на GitHub
-    const GITHUB_USER = "MrSenoteko";
-    const GITHUB_REPO = "gorebox_modding_api";
-    const githubFileLink = document.getElementById('github-file-link');
-    if (githubFileLink) {
-        githubFileLink.href = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/edit/main/blog-posts.json`;
-    }
-
     // --- Логика для плавной анимации сетки ---
     let mouseX = 0, mouseY = 0, gridX = 0, gridY = 0;
     document.body.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
@@ -46,37 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const translations = {
         ru: {
             nav_documentation: "Документация", nav_blog: "Блог", search_placeholder: "Поиск...",
-            blog_title: "Блог и Новости", add_post: "Добавить пост", view_all: "Смотреть все →",
-            toc_title: "Содержание", edit_post_title: "Редактировать пост", create_post_title: "Создать новый пост",
-            form_title_ru: "Заголовок (RU)", form_title_en: "Заголовок (EN)",
-            form_summary_ru: "Краткое содержание (RU)", form_summary_en: "Краткое содержание (EN)",
-            form_image_url: "URL изображения",
-            form_content_ru: "Содержимое (RU)", form_content_en: "Содержимое (EN)",
-            form_generate_json: "Сгенерировать JSON", form_cancel: "Отмена",
-            json_copy_title: "1. Скопируйте этот JSON код",
-            json_copy_desc: "Это всё обновленное содержимое для вашего блога.",
-            json_update_title: "2. Обновите `blog-posts.json` на GitHub",
-            json_update_desc: `Перейдите в ваш репозиторий на GitHub, откройте файл <code class="bg-gray-700 p-1 rounded">blog-posts.json</code>, нажмите "Edit" и замените его содержимое кодом, который вы только что скопировали.`,
-            json_open_github: "Открыть `blog-posts.json` на GitHub",
-            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. Все права защищены.`,
-            admin_login: "Вход для администратора"
+            blog_title: "Блог и Новости", view_all: "Смотреть все →",
+            toc_title: "Содержание",
+            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. Все права защищены.`
         },
         en: {
             nav_documentation: "Documentation", nav_blog: "Blog", search_placeholder: "Search...",
-            blog_title: "Blog & News", add_post: "Add New Post", view_all: "View All →",
-            toc_title: "On this page", edit_post_title: "Edit Post", create_post_title: "Create New Post",
-            form_title_ru: "Title (RU)", form_title_en: "Title (EN)",
-            form_summary_ru: "Summary (RU)", form_summary_en: "Summary (EN)",
-            form_image_url: "Image URL",
-            form_content_ru: "Content (RU)", form_content_en: "Content (EN)",
-            form_generate_json: "Generate JSON", form_cancel: "Cancel",
-            json_copy_title: "1. Copy this JSON code",
-            json_copy_desc: "This is the entire updated content for your blog.",
-            json_update_title: "2. Update `blog-posts.json` file on GitHub",
-            json_update_desc: `Go to your repository on GitHub, open the <code class="bg-gray-700 p-1 rounded">blog-posts.json</code> file, click "Edit", and replace its content with the code you just copied.`,
-            json_open_github: "Open `blog-posts.json` on GitHub",
-            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. All rights reserved.`,
-            admin_login: "Admin Login"
+            blog_title: "Blog & News", view_all: "View All →",
+            toc_title: "On this page",
+            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. All rights reserved.`
         }
     };
     let currentLang = localStorage.getItem('lang') || 'ru';
@@ -97,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         generateDocsSidebar();
         generateBlogPages();
         const postPage = document.getElementById('post-page');
-        if (postPage.classList.contains('active') && postPage.dataset.currentPostId) {
+        if (!postPage.classList.contains('hidden') && postPage.dataset.currentPostId) {
             showPost(postPage.dataset.currentPostId);
         }
     };
@@ -115,7 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentPageEl) currentPageEl.classList.add('hidden');
         
         const targetPage = document.getElementById(pageId);
-        if (targetPage) targetPage.classList.remove('hidden');
+        if (targetPage) {
+            targetPage.classList.remove('hidden');
+             setTimeout(() => {
+                animateElementsOnLoad(`#${pageId} .doc-item, #${pageId} .glass-card`);
+            }, 50);
+        }
         
         currentPage = pageId;
         
@@ -129,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.target); }));
     
-    // --- ПОЛНАЯ ВЕРСИЯ ДАННЫХ ДОКУМЕНТАЦИИ ---
+    // --- ДАННЫЕ ДОКУМЕНТАЦИИ ---
     const docData = [
         { 
             category: { ru: "Глобальные функции Lua", en: "Global Lua Functions" }, 
@@ -182,19 +156,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // --- ЛОГИКА АНИМАЦИЙ ---
+    const animateElementsOnLoad = (selector) => {
+        document.querySelectorAll(selector).forEach((el, index) => {
+            el.classList.add('will-animate');
+            setTimeout(() => {
+                el.classList.add('is-animated');
+            }, index * 80);
+        });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    const observeElements = (selector) => {
+        document.querySelectorAll(selector).forEach(el => {
+            el.classList.add('will-animate');
+            observer.observe(el);
+        });
+    };
+    
     const handleScrollAndHighlight = (targetId) => {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
             showPage('home-page');
             setTimeout(() => {
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                targetElement.style.transition = 'box-shadow 0.4s ease-in-out, transform 0.4s ease-in-out';
-                targetElement.style.boxShadow = '0 0 35px rgba(59, 130, 246, 0.4)';
-                targetElement.style.transform = 'scale(1.03)';
+                targetElement.classList.add('highlight-item');
                 setTimeout(() => {
-                    targetElement.style.boxShadow = '';
-                    targetElement.style.transform = 'scale(1)';
-                }, 2000);
+                    targetElement.classList.remove('highlight-item');
+                }, 1500);
             }, 100);
         }
     };
@@ -223,18 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">${functionsHtml}</div>`;
         }).join('');
         hljs.highlightAll();
+        observeElements('#documentation h2');
     };
     
     const generateDocsSidebar = () => {
         const sidebarContainer = document.getElementById('docs-sidebar');
         if (!sidebarContainer) return;
-        
         sidebarContainer.innerHTML = '';
         const nav = document.createElement('nav');
         nav.className = 'sticky top-28';
         const navList = document.createElement('ul');
         navList.className = 'space-y-6';
-
         docData.forEach(category => {
             const categoryName = category.category[currentLang] || category.category.en;
             const categoryId = `cat-${categoryName.replace(/[^a-zA-Z0-9_]/g, '-')}`;
@@ -245,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryLink.className = 'font-bold text-lg text-blue-300 hover:text-white transition-colors';
             categoryLink.dataset.targetId = categoryId;
             categoryLi.appendChild(categoryLink);
-
             const subList = document.createElement('ul');
             subList.className = 'pl-4 mt-2 space-y-2 border-l border-blue-500/20';
             category.functions.forEach(func => {
@@ -262,10 +257,8 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryLi.appendChild(subList);
             navList.appendChild(categoryLi);
         });
-
         nav.appendChild(navList);
         sidebarContainer.appendChild(nav);
-
         sidebarContainer.addEventListener('click', (e) => {
             if (e.target.tagName === 'A' && e.target.dataset.targetId) {
                 e.preventDefault();
@@ -319,10 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
     
-    // --- СИСТЕМА УПРАВЛЕНИЯ БЛОГОМ (CMS) ---
+    // --- СИСТЕМА ОТОБРАЖЕНИЯ БЛОГА ---
     let blogData = [];
-    const ADMIN_PASSWORD = 'admin';
-    let isAdmin = false;
 
     async function loadPosts() {
         try {
@@ -332,55 +323,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) { console.error("Could not load blog posts:", error); }
     }
 
-    const createQuillInstance = (container) => {
-        const toolbarOptions = [
-            ['bold', 'italic', 'underline'], [{ 'header': [1, 2, 3, false] }],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['blockquote', 'code-block'],
-            ['link', 'image']
-        ];
-        return new Quill(container, {
-            modules: {
-                syntax: true,
-                toolbar: {
-                    container: toolbarOptions,
-                    handlers: {
-                        'image': function() {
-                            const url = prompt('Enter image URL:');
-                            if (url) {
-                                const range = this.quill.getSelection(true);
-                                this.quill.insertEmbed(range.index, 'image', url, 'user');
-                            }
-                        }
-                    }
-                }
-            },
-            theme: 'snow'
-        });
-    };
-
-    const initializeEditors = () => {
-        if (document.getElementById('editor-container-ru')) {
-             quillRu = createQuillInstance('#editor-container-ru');
-             quillEn = createQuillInstance('#editor-container-en');
-        }
-    };
-
     const createPostCard = (post) => {
         const title = post.title[currentLang] || post.title.en;
         const summary = post.summary[currentLang] || post.summary.en;
-        return `<div class="glass-card rounded-2xl flex flex-col justify-between overflow-hidden">
-            <a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card flex-grow" style="background-image: url('${post.imageUrl}');">
-                <div class="p-8 post-card-content">
-                    <p class="text-sm text-gray-400 mb-2">${post.date}</p>
-                    <h3 class="text-2xl font-bold">${title}</h3>
-                    <p class="text-gray-300 mt-1">${summary}</p>
-                </div>
-            </a>
-            <div class="admin-card-controls p-3 bg-gray-900/70">
-                <button data-edit-id="${post.id}" class="edit-post-btn text-sm bg-blue-600/80 hover:bg-blue-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Edit</button>
-                <button data-delete-id="${post.id}" class="delete-post-btn text-sm bg-red-600/80 hover:bg-red-600 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors">Delete</button>
+        return `<a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card glass-card rounded-2xl flex-grow" style="background-image: url('${post.imageUrl}');">
+            <div class="p-8 post-card-content">
+                <p class="text-sm text-gray-400 mb-2">${post.date}</p>
+                <h3 class="text-2xl font-bold">${title}</h3>
+                <p class="text-gray-300 mt-1">${summary}</p>
             </div>
-        </div>`;
+        </a>`;
     };
     
     const generatePostTOC = (contentContainer) => {
@@ -388,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tocContainer.innerHTML = '';
         const headings = contentContainer.querySelectorAll('h2, h3');
         if (headings.length < 1) { tocContainer.classList.add('hidden'); return; }
-
         const nav = document.createElement('nav');
         nav.className = 'sticky top-28';
         const title = document.createElement('h3');
@@ -444,105 +395,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const previewTitleHtml = `<div class="flex justify-between items-center"><h2 class="text-3xl font-bold border-b-2 border-blue-500/30 pb-2 mb-8" data-lang-key="blog_title">${translations[currentLang].blog_title}</h2><a href="#" data-target="blog-page" class="nav-link text-blue-300 hover:text-white transition-colors" data-lang-key="view_all">${translations[currentLang].view_all}</a></div>`;
         previewContainer.innerHTML = `${previewTitleHtml}<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${sortedPosts.slice(0, 3).map(createPostCard).join('')}</div>`;
         blogGridContainer.innerHTML = sortedPosts.map(createPostCard).join('');
-    };
-
-    const editorForm = document.getElementById('blog-editor-form');
-
-    const showEditor = (post = null) => {
-        document.getElementById('json-output-container').classList.add('hidden');
-        if (post) {
-            document.getElementById('editor-title').textContent = translations[currentLang].edit_post_title;
-            document.getElementById('post-id-input').value = post.id;
-            document.getElementById('post-title-input-ru').value = post.title.ru;
-            document.getElementById('post-title-input-en').value = post.title.en;
-            document.getElementById('post-summary-input-ru').value = post.summary.ru;
-            document.getElementById('post-summary-input-en').value = post.summary.en;
-            document.getElementById('post-image-url-input').value = post.imageUrl;
-            quillRu.root.innerHTML = post.content.ru;
-            quillEn.root.innerHTML = post.content.en;
-        } else {
-            document.getElementById('editor-title').textContent = translations[currentLang].create_post_title;
-            editorForm.reset();
-            document.getElementById('post-id-input').value = '';
-            quillRu.root.innerHTML = '';
-            quillEn.root.innerHTML = '';
-        }
-        showPage('blog-editor-page');
-    };
-
-    const handleJsonGeneration = (e) => {
-        e.preventDefault();
-        const postId = document.getElementById('post-id-input').value;
-        const updatedPosts = [...blogData];
-        const postData = {
-            id: postId || `post-${Date.now()}`,
-            title: {
-                ru: document.getElementById('post-title-input-ru').value,
-                en: document.getElementById('post-title-input-en').value
-            },
-            summary: {
-                ru: document.getElementById('post-summary-input-ru').value,
-                en: document.getElementById('post-summary-input-en').value
-            },
-            imageUrl: document.getElementById('post-image-url-input').value,
-            content: {
-                ru: quillRu.root.innerHTML,
-                en: quillEn.root.innerHTML
-            },
-            date: new Date().toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }),
-            readTime: `${Math.ceil(quillEn.getText().length / 1500)} min read`
-        };
-        if (postId) {
-            const index = updatedPosts.findIndex(p => p.id === postId);
-            if(index > -1) updatedPosts[index] = postData;
-        } else {
-            updatedPosts.unshift(postData);
-        }
-        const jsonOutput = document.getElementById('json-output');
-        jsonOutput.value = JSON.stringify(updatedPosts, null, 2);
-        document.getElementById('json-output-container').classList.remove('hidden');
-        jsonOutput.select();
-        alert('JSON code generated! Scroll down to copy it.');
+        observeElements('#blog-preview h2, #blog-page h2');
     };
     
     mainContent.addEventListener('click', (e) => {
         const postLink = e.target.closest('[data-post-id]');
-        const editBtn = e.target.closest('.edit-post-btn');
-        const deleteBtn = e.target.closest('.delete-post-btn');
-        if (postLink && !e.target.closest('.admin-card-controls')) { e.preventDefault(); showPost(postLink.dataset.postId); } 
-        else if (editBtn) { e.preventDefault(); const post = blogData.find(p => p.id === editBtn.dataset.editId); if (post) showEditor(post); } 
-        else if (deleteBtn) {
-             e.preventDefault();
-            if (confirm('This will generate new JSON data without this post. Are you sure?')) {
-                const updatedPosts = blogData.filter(p => p.id !== deleteBtn.dataset.deleteId);
-                showPage('blog-editor-page');
-                const jsonOutput = document.getElementById('json-output');
-                jsonOutput.value = JSON.stringify(updatedPosts, null, 2);
-                document.getElementById('json-output-container').classList.remove('hidden');
-                jsonOutput.select();
-                alert('JSON for deletion generated. Copy the code below and update your file on GitHub.');
-            }
-        }
+        if (postLink) { 
+            e.preventDefault(); 
+            showPost(postLink.dataset.postId); 
+        } 
     });
     
-    document.getElementById('admin-login-btn').addEventListener('click', () => {
-        const password = prompt('Enter admin password:');
-        if(password === ADMIN_PASSWORD) {
-             alert('Login successful!');
-             body.classList.add('admin-mode');
-             isAdmin = true;
-        } else if (password) {
-            alert('Incorrect password.');
-        }
-    });
-    document.getElementById('add-post-btn').addEventListener('click', () => showEditor());
-    document.getElementById('cancel-edit-btn').addEventListener('click', () => showPage('blog-page'));
-    editorForm.addEventListener('submit', handleJsonGeneration);
-
-    // --- Инициализация при загрузке ---
+    // --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ---
     setLanguage(currentLang);
     showPage('home-page');
     loadPosts();
-    initializeEditors();
     hljs.highlightAll();
 });

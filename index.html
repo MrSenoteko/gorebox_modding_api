@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoreBox Modding Api - Documentation</title>
+    <title>GoreBox Modding Api</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
@@ -67,71 +67,18 @@
                     <section id="blog-page" class="page-section hidden">
                         <div class="flex justify-between items-center mb-12">
                             <h2 class="text-4xl font-bold" data-lang-key="blog_title">Blog & News</h2>
-                            <button id="add-post-btn" class="hidden admin-control bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors" data-lang-key="add_post">Add New Post</button>
                         </div>
                         <div id="blog-page-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
                     </section>
 
                     <section id="post-page" class="page-section hidden"></section>
-
-                    <section id="blog-editor-page" class="page-section hidden">
-                        <h2 id="editor-title" class="text-4xl font-bold mb-12" data-lang-key="create_post_title">Create New Post</h2>
-                        <form id="blog-editor-form" class="space-y-6">
-                            <input type="hidden" id="post-id-input">
-                            <div>
-                                <label for="post-title-input-ru" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_title_ru">Title (RU)</label>
-                                <input type="text" id="post-title-input-ru" class="form-input" required>
-                            </div>
-                             <div>
-                                <label for="post-title-input-en" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_title_en">Title (EN)</label>
-                                <input type="text" id="post-title-input-en" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="post-summary-input-ru" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_summary_ru">Summary (RU)</label>
-                                <input type="text" id="post-summary-input-ru" class="form-input" required>
-                            </div>
-                             <div>
-                                <label for="post-summary-input-en" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_summary_en">Summary (EN)</label>
-                                <input type="text" id="post-summary-input-en" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="post-image-url-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_image_url">Image URL</label>
-                                <input type="url" id="post-image-url-input" class="form-input" required>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_content_ru">Content (RU)</label>
-                                <div id="editor-container-ru"></div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="form_content_en">Content (EN)</label>
-                                <div id="editor-container-en"></div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors" data-lang-key="form_generate_json">Generate JSON</button>
-                                <button type="button" id="cancel-edit-btn" class="bg-gray-600/50 hover:bg-gray-600/80 text-white font-bold py-3 px-6 rounded-lg transition-colors" data-lang-key="form_cancel">Cancel</button>
-                            </div>
-                        </form>
-                        
-                        <div id="json-output-container" class="hidden mt-8">
-                            <h3 class="text-2xl font-bold mb-4" data-lang-key="json_copy_title">1. Copy this JSON code</h3>
-                            <p class="text-gray-400 mb-4" data-lang-key="json_copy_desc">This is the entire updated content for your blog.</p>
-                            <textarea id="json-output" rows="10" class="form-input w-full font-mono text-xs" readonly></textarea>
-                            <h3 class="text-2xl font-bold mt-6 mb-4" data-lang-key="json_update_title">2. Update `blog-posts.json` file on GitHub</h3>
-                            <p class="text-gray-400 mb-4" data-lang-key="json_update_desc">Go to your repository on GitHub, open the <code class="bg-gray-700 p-1 rounded">blog-posts.json</code> file, click "Edit", and replace its content with the code you just copied.</p>
-                            <a id="github-file-link" href="#" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors" data-lang-key="json_open_github">
-                                Open `blog-posts.json` on GitHub
-                            </a>
-                        </div>
-                    </section>
                 </div>
 
                 <aside id="post-toc-sidebar" class="hidden lg:block lg:w-64 lg:flex-shrink-0 py-10"></aside>
-
             </div>
         </main>
         <footer class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center mt-20 py-6 border-t border-blue-500/20 text-gray-500">
             <p data-lang-key="footer_copyright">© 2025 GoreBox Modding Api. All rights reserved.</p>
-            <button id="admin-login-btn" class="text-xs text-gray-600 hover:text-blue-400 mt-2" data-lang-key="admin_login">Admin Login</button>
         </footer>
     </div>
 
