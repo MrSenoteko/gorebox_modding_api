@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const grid = document.getElementById('background-grid');
     const mainContent = document.querySelector('main');
-    
-    // --- Логика для плавной анимации сетки ---
+
     let mouseX = 0, mouseY = 0, gridX = 0, gridY = 0;
     document.body.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
     const animate = () => {
@@ -17,10 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     animate();
 
-    // --- Логика для плавающей шапки ---
     window.addEventListener('scroll', () => body.classList.toggle('header-scrolled', window.scrollY > 30));
 
-    // --- Логика переключения тем ---
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-toggle-icon');
     const moonIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
@@ -33,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', () => setTheme(!body.classList.contains('light-theme')));
     setTheme(localStorage.getItem('theme') === 'light');
 
-    // --- СИСТЕМА ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА ---
     const translations = {
         ru: {
             nav_documentation: "Документация", nav_blog: "Блог", search_placeholder: "Поиск...",
@@ -76,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     langToggle.addEventListener('click', () => setLanguage(currentLang === 'ru' ? 'en' : 'ru'));
 
-    // --- Навигация по сайту ---
     const pages = document.querySelectorAll('.page-section');
     const navLinks = document.querySelectorAll('.nav-link');
     let currentPage = 'home-page';
@@ -107,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.target); }));
     
-    // --- ДАННЫЕ ДОКУМЕНТАЦИИ ---
     const docData = [
         { 
             category: { ru: "Глобальные функции Lua", en: "Global Lua Functions" }, 
@@ -160,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- ЛОГИКА АНИМАЦИЙ ---
     const animateElementsOnLoad = (selector) => {
         document.querySelectorAll(selector).forEach((el, index) => {
             el.classList.add('will-animate');
@@ -316,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
     
-    // --- СИСТЕМА ОТОБРАЖЕНИЯ БЛОГА ---
     let blogData = [];
 
     async function loadPosts() {
@@ -410,7 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
 
-    // --- КОПИРОВАНИЕ ВСЕЙ ДОКУМЕНТАЦИИ ---
     const copyDocsBtn = document.getElementById('copy-all-docs-btn');
     copyDocsBtn.addEventListener('click', () => {
         let fullDocsText = '';
@@ -427,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         navigator.clipboard.writeText(fullDocsText).then(() => {
-            // Animation
             const originalText = copyDocsBtn.textContent;
             copyDocsBtn.textContent = translations[currentLang].docs_copied;
             copyDocsBtn.classList.add('copied');
@@ -441,7 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ---
     setLanguage(currentLang);
     showPage('home-page');
     loadPosts();
