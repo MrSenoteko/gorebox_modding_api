@@ -39,13 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_documentation: "Документация", nav_blog: "Блог", search_placeholder: "Поиск...",
             blog_title: "Блог и Новости", view_all: "Смотреть все →",
             toc_title: "Содержание",
-            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. Все права защищены.`
+            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. Все права защищены.`,
+            copy_docs: "Копировать всё",
+            docs_copied: "Скопировано!"
         },
         en: {
             nav_documentation: "Documentation", nav_blog: "Blog", search_placeholder: "Search...",
             blog_title: "Blog & News", view_all: "View All →",
             toc_title: "On this page",
-            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. All rights reserved.`
+            footer_copyright: `© ${new Date().getFullYear()} GoreBox Modding Api. All rights reserved.`,
+            copy_docs: "Copy Docs",
+            docs_copied: "Copied!"
         }
     };
     let currentLang = localStorage.getItem('lang') || 'ru';
@@ -404,6 +408,37 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); 
             showPost(postLink.dataset.postId); 
         } 
+    });
+
+    // --- КОПИРОВАНИЕ ВСЕЙ ДОКУМЕНТАЦИИ ---
+    const copyDocsBtn = document.getElementById('copy-all-docs-btn');
+    copyDocsBtn.addEventListener('click', () => {
+        let fullDocsText = '';
+        docData.forEach(category => {
+            const categoryName = category.category[currentLang] || category.category.en;
+            fullDocsText += `--- ${categoryName.toUpperCase()} ---\n\n`;
+            category.functions.forEach(func => {
+                const funcDescription = func.description[currentLang] || func.description.en;
+                fullDocsText += `Function: ${func.name}\n`;
+                fullDocsText += `Description: ${funcDescription}\n`;
+                fullDocsText += `Example:\n\`\`\`lua\n${func.example}\n\`\`\`\n\n`;
+            });
+            fullDocsText += '\n';
+        });
+
+        navigator.clipboard.writeText(fullDocsText).then(() => {
+            // Animation
+            const originalText = copyDocsBtn.textContent;
+            copyDocsBtn.textContent = translations[currentLang].docs_copied;
+            copyDocsBtn.classList.add('copied');
+
+            setTimeout(() => {
+                copyDocsBtn.textContent = originalText;
+                copyDocsBtn.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy documentation: ', err);
+        });
     });
     
     // --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ---

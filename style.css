@@ -14,6 +14,7 @@
     --code-bg: #1f2937;
     --aurora-color-1: rgba(80, 20, 180, 0.15); /* Пурпурный */
     --aurora-color-2: rgba(20, 120, 220, 0.15); /* Синий */
+    --success-color: #2ea043;
 }
 
 body.light-theme {
@@ -102,7 +103,19 @@ body {
 
 .header-scrolled #header-container { padding: 0.75rem 0; }
 .header-scrolled #header-background { opacity: 1; }
-.header-scrolled .header-subtitle { display: none; }
+
+/* SMOOTH HEADER TRANSITION FIX */
+.header-subtitle {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    max-height: 2rem; /* Give it a max-height to transition from */
+    overflow: hidden;
+}
+.header-scrolled .header-subtitle {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0 !important;
+}
+
 .header-scrolled .header-title { font-size: 1.5rem; }
 
 .header-content {
@@ -110,7 +123,7 @@ body {
     z-index: 1;
 }
 
-.header-title, .header-subtitle {
+.header-title {
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -177,6 +190,14 @@ button, .nav-link, .copy-btn {
 button:active, .nav-link:active, .copy-btn:active {
     transform: scale(0.95);
 }
+
+/* COPY DOCS BUTTON ANIMATION */
+#copy-all-docs-btn.copied {
+    background-color: var(--success-color);
+    color: white;
+    transform: scale(1.05);
+}
+
 
 .post-card { 
     position: relative; 
@@ -254,7 +275,7 @@ pre:hover .copy-btn { opacity: 1; }
     color: white; 
 }
 .copy-btn-copied { 
-    background-color: #2ea043;
+    background-color: var(--success-color);
     color: white; 
 }
 
@@ -340,6 +361,4 @@ a { text-decoration: none; }
 .text-gray-400 { color: var(--text-color-muted); }
 footer { border-top-color: var(--border-color); }
 
-body.light-theme #post-page .post-title-text {
-    color: var(--text-color);
-}
+body.light-theme
