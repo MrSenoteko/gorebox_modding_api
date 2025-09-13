@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let quill;
     
     // !!! ВАЖНО: Укажите ваше имя пользователя и имя репозитория на GitHub
-    const GITHUB_USER = "YOUR_USERNAME";
-    const GITHUB_REPO = "YOUR_REPONAME";
+    const GITHUB_USER = "MrSenoteko";
+    const GITHUB_REPO = "gorebox_modding_api";
     const githubFileLink = document.getElementById('github-file-link');
     if (githubFileLink) {
         githubFileLink.href = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/edit/main/blog-posts.json`;
