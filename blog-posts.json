@@ -1,0 +1,11 @@
+[
+  {
+    "id": "new-beginning",
+    "title": "The beginning of a new one",
+    "date": "September 08, 2025",
+    "readTime": "5 min read",
+    "summary": "The new modding has become better and more refined!",
+    "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2027330/6cc4a407aa06e5b4bf47e1ccf1df25601d4e5419/library_600x900_2x.jpg?t=1734826638",
+    "content": "<p>This is the main content of the blog post. You can write detailed explanations, tutorials, and include code snippets here.</p><p><br></p><h2>A Subsection Title</h2><p>Break down your posts into logical sections. This makes the content easier to digest for your readers.</p><pre class=\"ql-syntax\" spellcheck=\"false\">-- You can even include highlighted code blocks\\nfunction M.start()\\n    log(\"This post was generated dynamically!\")\\nend\\n</pre>"
+  }
+]
