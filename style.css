@@ -205,8 +205,6 @@ button:active, .nav-link:active, .copy-btn:active {
 
 .post-card { 
     position: relative; 
-    background-size: cover; 
-    background-position: center; 
     overflow: hidden; 
     display: flex; 
     flex-direction: column;
@@ -214,13 +212,31 @@ button:active, .nav-link:active, .copy-btn:active {
     min-height: 250px; 
 }
 
+.post-card-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    transform: scale(1.05);
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 1;
+}
+
+.post-card:hover .post-card-background {
+    transform: scale(1.1);
+}
+
 .post-card::before { 
     content: ''; 
     position: absolute; 
     inset: 0; 
-    background: linear-gradient(to top, var(--card-bg) 10%, transparent 70%);
-    transition: background-color 0.4s ease, opacity 0.4s ease;
+    background: linear-gradient(to top, rgba(10, 10, 15, 0.9) 10%, transparent 75%);
+    transition: opacity 0.4s ease;
     opacity: 1;
+    z-index: 2;
 }
 
 .post-card:hover::before {
@@ -236,6 +252,14 @@ button:active, .nav-link:active, .copy-btn:active {
 
 .post-card:hover .post-card-content {
     transform: translateY(-5px);
+}
+
+.post-card h3 {
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+}
+.post-card p {
+    color: #e0e0e0;
 }
 
 .post-title-text {
@@ -292,11 +316,20 @@ pre:hover .copy-btn { opacity: 1; }
     color: white; 
 }
 
-.page-section { 
-    transition: opacity 0.6s ease-in-out;
+.page-section {
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.page-section:not(.active) {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+.page-section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .page-section.hidden { 
-    opacity: 0; 
     display: none; 
 }
 
@@ -371,4 +404,3 @@ a { text-decoration: none; }
 .hover\:bg-blue-500\/20:hover { background-color: var(--border-color); }
 .text-gray-400 { color: var(--text-color-muted); }
 footer { border-top-color: var(--border-color); }
-}
