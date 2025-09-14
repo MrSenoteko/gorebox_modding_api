@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     langToggle.addEventListener('click', () => setLanguage(currentLang === 'ru' ? 'en' : 'ru'));
 
     const pages = document.querySelectorAll('.page-section');
-    const navLinks = document.querySelectorAll('.nav-link');
     let currentPage = 'home-page';
     const showPage = (pageId) => {
         const docsSidebar = document.getElementById('docs-sidebar');
@@ -100,7 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-    navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.target); }));
+
+    document.body.addEventListener('click', (e) => {
+        const navLink = e.target.closest('.nav-link');
+        if (navLink && navLink.dataset.target) {
+            e.preventDefault();
+            showPage(navLink.dataset.target);
+        }
+    });
     
     const docData = [
         { 
@@ -369,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const postPageContainer = document.getElementById('post-page');
         postPageContainer.dataset.currentPostId = postId;
         postPageContainer.innerHTML = `<div class="relative w-full h-80 rounded-2xl overflow-hidden mb-12">
-                <img src="${post.imageUrl}" class="absolute w-full h-full object-cover" alt="Post banner">
+                <img src="${post.imageUrl}" class="absolute w-full h-full object-cover post-banner-image" alt="Post banner">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 p-8 md:p-12">
                     <p class="text-gray-300">${post.date} · ${post.readTime}</p>

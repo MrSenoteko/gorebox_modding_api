@@ -33,6 +33,15 @@ body.light-theme {
     --aurora-color-2: rgba(168, 85, 247, 0.1);
 }
 
+body.light-theme #searchInput {
+    background-color: rgba(219, 234, 254, 0.9);
+    border-color: rgba(96, 165, 250, 1);
+    color: var(--text-color);
+}
+body.light-theme #searchInput::placeholder {
+    color: rgba(59, 130, 246, 0.8);
+}
+
 body { 
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -229,6 +238,16 @@ button:active, .nav-link:active, .copy-btn:active {
     transform: translateY(-5px);
 }
 
+.post-title-text {
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.post-banner-image {
+    filter: blur(3px);
+    transform: scale(1.05);
+}
+
 .admin-card-controls {
     display: flex;
     z-index: 11;
@@ -352,3 +371,4 @@ a { text-decoration: none; }
 .hover\:bg-blue-500\/20:hover { background-color: var(--border-color); }
 .text-gray-400 { color: var(--text-color-muted); }
 footer { border-top-color: var(--border-color); }
+}
