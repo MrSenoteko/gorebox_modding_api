@@ -328,7 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const createPostCard = (post) => {
         const title = post.title[currentLang] || post.title.en;
         const summary = post.summary[currentLang] || post.summary.en;
-        return `<a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card glass-card rounded-2xl flex-grow" style="background-image: url('${post.imageUrl}');">
+        // EDIT: Changed this function to enable blur. This is the ONLY change.
+        return `<a href="#" data-target="post-page" data-post-id="${post.id}" class="block post-card glass-card rounded-2xl flex-grow">
+            <div class="post-card-background" style="background-image: url('${post.imageUrl}');"></div>
             <div class="p-8 post-card-content">
                 <p class="text-sm text-gray-400 mb-2">${post.date}</p>
                 <h3 class="text-2xl font-bold">${title}</h3>
